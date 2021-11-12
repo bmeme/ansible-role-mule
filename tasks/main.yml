@@ -1,0 +1,8 @@
+---
+- name: Define mule_version.
+  set_fact:
+    mule_version: "{{ __mule_version }}"
+  when: mule_version is not defined
+
+- name: Download and install Mule
+  include_tasks: install.yml

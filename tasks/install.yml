@@ -1,0 +1,33 @@
+---
+- name: Download mule-standalone-{{ mule_version }}.tar.gz
+  ansible.builtin.get_url:
+    url: "{{ mule_download_url }}/{{ mule_version }}/mule-standalone-{{ mule_version }}.tar.gz"
+    dest: "{{ mule_home }}"
+    checksum: "sha1:{{ mule_checksum }}"
+    owner: "{{ mule_user }}"
+    group: "{{ mule_user }}"
+  register: mule_artifact
+  until: mule_artifact is succeeded
+
+- name: Install mule-standalone-{{ mule_version }}
+  unarchive:
+    src: '{{ mule_artifact.dest }}'
+    dest: '{{ mule_home }}/'
+    remote_src: true
+    owner: "{{ mule_user }}"
+    group: "{{ mule_user }}"
+    mode: 0755
+  when: mule_artifact.changed
+
+- name: Ensure symlink to old Mule version is removed
+  file:
+    path: "{{ mule_home }}/mule"
+    state: absent
+
+- name: Ensure new Mule version is correctly linked
+  file:
+    path: "{{ mule_home }}/mule"
+    src: "{{ mule_home }}/mule-standalone-{{ mule_version }}"
+    state: link
+    owner: "{{ mule_user }}"
+    group: "{{ mule_user }}"

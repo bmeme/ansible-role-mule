@@ -1,0 +1,12 @@
+---
+## System user and group running Mule
+mule_group: mule
+mule_user: mule
+## Directory where Mule will be installed
+mule_home: "/opt/mule"
+
+## Mule Download URL. DON'T CHANGE!
+mule_download_url: "https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone"
+mule_checksum_url: "{{ mule_download_url }}/{{ mule_version }}/mule-standalone-{{ mule_version }}.tar.gz.sha1"
+mule_checksum: >-
+  {{ lookup('url', mule_checksum_url) }}

@@ -1,0 +1,25 @@
+galaxy_info:
+  role_name: mule
+  namespace: bmeme
+  author: Daniele Piaggesi <daniele.piaggesi@bmeme.com>
+  description: This role provides installation of Mulesoft
+  company: Bonsaimeme S.r.l.
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.1
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+  galaxy_tags:
+    - mule
+    - java
+
+dependencies:
+  - geerlingguy.java
