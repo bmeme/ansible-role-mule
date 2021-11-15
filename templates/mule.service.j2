@@ -1,0 +1,17 @@
+[Unit]
+Description=Mule
+Documentation=https://www.mulesoft.com/
+After=network.target
+
+[Service]
+Type=simple
+User=mule
+ExecStart="{{ mule_home }}/mule/bin/mule"
+WorkingDirectory="{{ mule_home }}/mule"
+Restart=on-failure
+# Output to syslog
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target

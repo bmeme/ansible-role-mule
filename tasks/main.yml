@@ -4,5 +4,18 @@
     mule_version: "{{ __mule_version }}"
   when: mule_version is not defined
 
+- name: Execute prepare tasks
+  include_tasks: prepare.yml
+
 - name: Download and install Mule
   include_tasks: install.yml
+
+- name: Configure Mule
+  include_tasks: configure.yml
+
+- name: Restart Mule
+  ansible.builtin.service:
+    name: "mule.service"
+    state: restarted
+    sleep: 5
+  when: mule_restart_handler_enabled

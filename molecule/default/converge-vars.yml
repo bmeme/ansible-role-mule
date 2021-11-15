@@ -1,8 +1,5 @@
 java_packages:
   - java-11-openjdk
 
-create_mule_user: true
-mule_group: mule
-mule_user: mule
-mule_home: "/opt/mule"
-mule_version: "4.2.1"
+# Disabled start/restart of service due to an error durint test.
+mule_restart_handler_enabled: false

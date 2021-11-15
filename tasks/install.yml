@@ -17,7 +17,6 @@
     owner: "{{ mule_user }}"
     group: "{{ mule_user }}"
     mode: 0755
-  when: mule_artifact.changed
 
 - name: Ensure symlink to old Mule version is removed
   file:
@@ -31,3 +30,9 @@
     state: link
     owner: "{{ mule_user }}"
     group: "{{ mule_user }}"
+
+- name: Remove Mule package
+  file:
+    path: "{{ mule_home }}/mule-standalone-{{ mule_version }}.tar.gz"
+    state: absent
+  when: mule_remove_package | default(false) | bool

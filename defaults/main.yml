@@ -1,12 +1,96 @@
 ---
 ## System user and group running Mule
+mule_create_user: true
 mule_group: mule
 mule_user: mule
 ## Directory where Mule will be installed
 mule_home: "/opt/mule"
+mule_remove_package: true
+# Enable restart mule handler
+mule_restart_handler_enabled: true
 
 ## Mule Download URL. DON'T CHANGE!
 mule_download_url: "https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone"
 mule_checksum_url: "{{ mule_download_url }}/{{ mule_version }}/mule-standalone-{{ mule_version }}.tar.gz.sha1"
 mule_checksum: >-
   {{ lookup('url', mule_checksum_url) }}
+
+# Mule Default Configuration Object
+mule_default_config:
+  http_server_sockets:
+    sendBufferSize:
+      enabled: false
+      value: 1024
+    receiveBufferSize:
+      enabled: false
+      value: 1024
+    clientTimeout:
+      enabled: true
+      value: 60000
+    sendTcpNoDelay:
+      enabled: true
+      value: "true"
+    linger:
+      enabled: false
+      value: 60000
+    keepAlive:
+      enabled: true
+      value: "false"
+    reuseAddress:
+      enabled: true
+      value: "true"
+    receiveBacklog:
+      enabled: true
+      value: 50
+    serverTimeout:
+      enabled: true
+      value: 60000
+  scheduler_pools:
+    gracefulShutdownTimeout:
+      enabled: true
+      value: 15000
+    cpuLight:
+      threadPoolSize:
+        enabled: true
+        value: "2*cores"
+      workQueueSize:
+        enabled: true
+        value: 0
+    io:
+      threadPoolCoreSize:
+        enabled: true
+        value: cores
+      threadPoolMaxSize:
+        enabled: true
+        value: "max(2, cores + ((mem - 245760) / 5120))"
+      workQueueSize:
+        enabled: true
+        value: 0
+      threadPoolKeepAlive:
+        enabled: true
+        value: 30000
+    cpuIntensive:
+      threadPoolSize:
+        enabled: true
+        value: "2*cores"
+      workQueueSize:
+        enabled: true
+        value: "2*cores"
+  wrapper:
+    startupTimeout: "600"
+    java:
+      InitMemory: "1024"
+      MaxMemory: "1024"
+    logging:
+      console:
+        format: M
+        level: INFO
+      logfile:
+        path: "%MULE_BASE%/logs"
+        filename: "%MULE_APP%.log"
+        format: M
+        level: INFO
+        maxSize: 1m
+        maxFiles: 10
+      syslog:
+        level: NONE

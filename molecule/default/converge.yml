@@ -5,21 +5,6 @@
   vars_files:
     - converge-vars.yml
 
-  pre_tasks:
-    - name: Create Mule Group
-      ansible.builtin.user:
-        name: "{{ mule_group }}"
-      when: create_mule_user | default(false) | bool
-
-    - name: Create Mule User
-      ansible.builtin.user:
-        name: "{{ mule_user }}"
-        shell: /bin/bash
-        group: "{{ mule_group }}"
-        create_home: true
-        home: "/opt/mule"
-      when: create_mule_user | default(false) | bool
-
   tasks:
     - name: "Include ansible-role-mule"
       include_role:

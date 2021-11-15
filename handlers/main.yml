@@ -1,2 +1,7 @@
 ---
-# handlers file for ansible-role-mule
+- name: Restart Mule
+  ansible.builtin.service:
+    name: "mule.service"
+    state: restarted
+    sleep: 5
+  when: mule_restart_handler_enabled
