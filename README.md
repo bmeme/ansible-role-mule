@@ -1,3 +1,7 @@
+![example workflow](https://github.com/bmeme/ansible-role-mule/actions/workflows/ci.yml/badge.svg?branch=main)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 Ansible Role: Mule
 =========
 
@@ -7,7 +11,7 @@ Requirements
 ------------
 
 Java must be available on the server. 
-You can easily install Java using the great [Geerlinggyu role](https://github.com/geerlingguy/ansible-role-java) `geerlingguy.java` role. 
+You can easily install Java using the great [Geerlingguy role](https://github.com/geerlingguy/ansible-role-java) `geerlingguy.java` role. 
 But you can use others obviously.
 
 Make sure the Java version installed meets the Mule requirements.
