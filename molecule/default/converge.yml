@@ -1,11 +1,11 @@
 ---
 - name: Converge
   hosts: all
+  become: true
 
   vars_files:
     - converge-vars.yml
 
-  tasks:
-    - name: "Include ansible-role-mule"
-      include_role:
-        name: "ansible-role-mule"
+  roles:
+    - role: geerlingguy.java
+    - role: bmeme.mule

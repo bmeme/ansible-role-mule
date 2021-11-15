@@ -26,16 +26,28 @@ If you want to update the role, you need to pass --force parameter when installi
 
 `$ ansible-galaxy install --force bmeme.mule`
 
+Role Variables
+--------------
+Basic variables are:
+
+| Variable Name  | Description  | Default  |
+|----------------|--------------|----------|
+| `mule_version` | The version of Mule you want to install. Get a look [here](https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/)| `4.2.1`|
+| `mule_group`   | The system group to create running Mule | `mule` |
+| `mule_user`   | The system user to create running Mule | `mule` |
+| `mule_home`   | Directory that hosts Mule | `/opt/mule` |
+| `mule_remove_package`   | Remove "tar.gz" Mule package when been installed | `true` |
+| `mule_restart_handler_enabled`   | Restart/Start Mule after installation | `true` |
+
 Mule Configuration Properties
 -----------------------------
 
-This role inject these configuration files into mule installation folder *before* to start it:
+This role injects these configuration files into mule installation folder *before* to start it:
 - http-server-socket.conf
 - scheduler-pools.conf
 - wrapper.conf
-- wrapper-additional.conf
 
-To allow a full configuration of these files, this role makes available a _configuration object_ you can set before 
+To allow a full configuration of these files, this role makes available a _configuration object_ you can set before
 running your playbook. This is the configuration object:
 
 ```
@@ -119,34 +131,16 @@ mule_default_config:
         level: NONE
 ```
 
-If you want to change only some default values (not all), you can replace them directly in your playbook. 
-For ex:
+All values reflect the Mule configuration defaults. Then if it is your first installation and/or you don't know how to
+configure Mule, don't do anything in your playbook, leave defaults.
 
-```
-mule_default_config:
-  wrapper:
-    java:
-      InitMemory: "2048"
-      MaxMemory: "4096" 
-    logging:
-      logfile:
-        level: WARNING
-```
+But if you know what you are doing and want to change something you need to copy-and-paste the *ENTIRE* object
+in the configuration YML file of your playbook and change only values you need.
 
 To best configure your Mule instance take a look at the official documentation [here](https://docs.mulesoft.com/general/)
 
-Role Variables
---------------
-Other available variables are:
-
-| Variable Name  | Description  | Default  |
-|----------------|--------------|----------|
-| `mule_version` | The version of Mule you want to install. Get a look [here](https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/)| `4.2.1`|
-| `mule_group`   | The system group to create running Mule | `mule` |
-| `mule_user`   | The system user to create running Mule | `mule` |
-| `mule_home`   | Directory that hosts Mule | `/opt/mule` |
-| `mule_remove_package`   | Remove "tar.gz" Mule package when been installed | `true` |
-| `mule_restart_handler_enabled`   | Restart/Start Mule after installation | `true` |
+I don't know if this is the best approach to achieve this result. Probably not. But that's it...
+Suggestions are welcome
 
 Dependencies
 ------------
