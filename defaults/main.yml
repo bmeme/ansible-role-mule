@@ -15,82 +15,63 @@ mule_checksum_url: "{{ mule_download_url }}/{{ mule_version }}/mule-standalone-{
 mule_checksum: >-
   {{ lookup('url', mule_checksum_url) }}
 
-# Mule Default Configuration Object
-mule_default_config:
-  http_server_sockets:
-    sendBufferSize:
-      enabled: false
-      value: 1024
-    receiveBufferSize:
-      enabled: false
-      value: 1024
-    clientTimeout:
-      enabled: true
-      value: 60000
-    sendTcpNoDelay:
-      enabled: true
-      value: "true"
-    linger:
-      enabled: false
-      value: 60000
-    keepAlive:
-      enabled: true
-      value: "false"
-    reuseAddress:
-      enabled: true
-      value: "true"
-    receiveBacklog:
-      enabled: true
-      value: 50
-    serverTimeout:
-      enabled: true
-      value: 60000
-  scheduler_pools:
-    gracefulShutdownTimeout:
-      enabled: true
-      value: 15000
-    cpuLight:
-      threadPoolSize:
-        enabled: true
-        value: "2*cores"
-      workQueueSize:
-        enabled: true
-        value: 0
-    io:
-      threadPoolCoreSize:
-        enabled: true
-        value: cores
-      threadPoolMaxSize:
-        enabled: true
-        value: "max(2, cores + ((mem - 245760) / 5120))"
-      workQueueSize:
-        enabled: true
-        value: 0
-      threadPoolKeepAlive:
-        enabled: true
-        value: 30000
-    cpuIntensive:
-      threadPoolSize:
-        enabled: true
-        value: "2*cores"
-      workQueueSize:
-        enabled: true
-        value: "2*cores"
-  wrapper:
-    startupTimeout: "600"
-    java:
-      InitMemory: "1024"
-      MaxMemory: "1024"
-    logging:
-      console:
-        format: M
-        level: INFO
-      logfile:
-        path: "%MULE_BASE%/logs"
-        filename: "%MULE_APP%.log"
-        format: M
-        level: INFO
-        maxSize: 1m
-        maxFiles: 10
-      syslog:
-        level: NONE
+## Mule base configuration
+## @see scheduler-pools.conf
+scheduler_pools_gracefulShutdownTimeout: "15000"
+scheduler_pools_cpuLight_threadPoolSize: "2*cores"
+scheduler_pools_cpuLight_workQueueSize: 0
+scheduler_pools_io_threadPoolCoreSize: "cores"
+scheduler_pools_io_threadPoolMaxSize: "max(2, cores + ((mem - 245760) / 5120))"
+scheduler_pools_io_workQueueSize: 0
+scheduler_pools_io_threadPoolKeepAlive: 30000
+scheduler_pools_cpuIntensive_threadPoolSize: "2*cores"
+scheduler_pools_cpuIntensive_workQueueSize: "2*cores"
+
+# Custom configuration items
+# Example:
+#
+# scheduler_pools_extended_configuration: |-
+#   org.mule.runtime.scheduler.new_amazing_property=value
+#
+scheduler_pools_extended_configuration: ""
+
+## @see wrapper.conf
+wrapper_startupTimeout: "600"
+wrapper_java_InitMemory: "1024"
+wrapper_java_MaxMemory: "1024"
+wrapper_logging_console_format: M
+wrapper_logging_console_level: INFO
+wrapper_logging_logfile_path: "%MULE_BASE%/logs"
+wrapper_logging_logfile_filename: "%MULE_APP%.log"
+wrapper_logging_logfile_format: M
+wrapper_logging_logfile_level: INFO
+wrapper_logging_logfile_maxSize: "1m"
+wrapper_logging_logfile_maxFiles: 10
+wrapper_logging_syslog_level: NONE
+
+# Custom configuration items
+# Example:
+#
+# wrapper_extended_configuration: |-
+#   wrapper.new_amazing_property=value
+#
+wrapper_extended_configuration: ""
+
+## @see http-server-sockets.conf
+http_server_sockets_sendBufferSize: 1024
+http_server_sockets_receiveBufferSize: 1024
+http_server_sockets_clientTimeout: 60000
+http_server_sockets_sendTcpNoDelay: "true"
+http_server_sockets_linger: 60000
+http_server_sockets_keepAlive: "false"
+http_server_sockets_reuseAddress: "true"
+http_server_sockets_receiveBacklog: 50
+http_server_sockets_serverTimeout: 60000
+
+# Custom configuration items
+# Example:
+#
+# http_server_extended_configuration: |-
+#   org.mule.runtime.http.server.socket.new_amazing_property=value
+#
+http_server_extended_configuration: ""

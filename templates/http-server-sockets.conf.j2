@@ -1,51 +1,33 @@
 # Configures the HTTP service of the Mule Runtime
 
-{% if mule_default_config.http_server_sockets.sendBufferSize.enabled %}
 # The size of the buffer (in bytes) used when sending data, set on the socket itself.
-org.mule.runtime.http.server.socket.sendBufferSize={{ mule_default_config.http_server_sockets.sendBufferSize.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.sendBufferSize={{ http_server_sockets_sendBufferSize }}
 
-{% if mule_default_config.http_server_sockets.receiveBufferSize.enabled %}
 #The size of the buffer (in bytes) used when receiving data, set on the socket itself.
-#org.mule.runtime.http.server.socket.receiveBufferSize={{ mule_default_config.http_server_sockets.receiveBufferSize.value }}
-{% endif %}
+#org.mule.runtime.http.server.socket.receiveBufferSize={{ http_server_sockets_receiveBufferSize }}
 
-{% if mule_default_config.http_server_sockets.clientTimeout.enabled %}
 # The SO_TIMEOUT value on client sockets. Reading from the socket will block for up to this long (in milliseconds) before the read
 # fails. A value of 0 (the socket's default) causes the read to wait indefinitely (if no data arrives).
-org.mule.runtime.http.server.socket.clientTimeout={{ mule_default_config.http_server_sockets.clientTimeout.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.clientTimeout={{ http_server_sockets_clientTimeout }}
 
-{% if mule_default_config.http_server_sockets.sendTcpNoDelay.enabled %}
 # If set, transmitted data is not collected together for greater efficiency but sent immediately.
-org.mule.runtime.http.server.socket.sendTcpNoDelay={{ mule_default_config.http_server_sockets.sendTcpNoDelay.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.sendTcpNoDelay={{ http_server_sockets_sendTcpNoDelay }}
 
-{% if mule_default_config.http_server_sockets.linger.enabled %}
 # The SO_LINGER value. This is related to how long (in milliseconds) the socket will take to close so that any
 # remaining data is transmitted correctly.
-org.mule.runtime.http.server.socket.linger={{ mule_default_config.http_server_sockets.linger.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.linger={{ http_server_sockets_linger }}
 
-{% if mule_default_config.http_server_sockets.keepAlive.enabled %}
 # SO_KEEPALIVE behavior on open sockets. This automatically checks socket connections that are open but unused for long
 # periods and closes them if the connection becomes unavailable.
-org.mule.runtime.http.server.socket.keepAlive={{ mule_default_config.http_server_sockets.keepAlive.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.keepAlive={{ http_server_sockets_keepAlive }}
 
-{% if mule_default_config.http_server_sockets.reuseAddress.enabled %}
 # Enabling SO_REUSEADDR prior to binding the socket using bind(SocketAddress) allows the socket to be bound even though a
 # previous connection is in a clientSocketTimeout state.
-org.mule.runtime.http.server.socket.reuseAddress={{ mule_default_config.http_server_sockets.reuseAddress.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.reuseAddress={{ http_server_sockets_reuseAddress }}
 
-{% if mule_default_config.http_server_sockets.receiveBacklog.enabled %}
 # The maximum queue length for incoming connections.
-org.mule.runtime.http.server.socket.receiveBacklog={{ mule_default_config.http_server_sockets.receiveBacklog.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.receiveBacklog={{ http_server_sockets_receiveBacklog }}
 
-{% if mule_default_config.http_server_sockets.serverTimeout.enabled %}
 # The SO_TIMEOUT value when the socket is used as a server. Reading from the socket will block for up to this long (in
 # milliseconds) before the read fails. A value of 0 causes the read to wait indefinitely (if no data arrives).
-org.mule.runtime.http.server.socket.serverTimeout={{ mule_default_config.http_server_sockets.serverTimeout.value }}
-{% endif %}
+org.mule.runtime.http.server.socket.serverTimeout={{ http_server_sockets_serverTimeout }}

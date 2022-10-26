@@ -7,6 +7,14 @@
     group: "{{ mule_group }}"
     mode: 0755
 
+- name: Append extended configuration to http-server-sockets.conf
+  ansible.builtin.blockinfile:
+    path: "{{ mule_home }}/mule/conf/http-server-sockets.conf"
+    block: "{{ http_server_extended_configuration }}"
+  when: 
+    - http_server_extended_configuration is defined
+    - http_server_extended_configuration | length > 0
+
 - name: Configure scheduler-pools.conf
   ansible.builtin.template:
     dest: "{{ mule_home }}/mule/conf/scheduler-pools.conf"
@@ -15,6 +23,14 @@
     group: "{{ mule_group }}"
     mode: 0755
 
+- name: Append extended configuration to scheduler-pools.conf
+  ansible.builtin.blockinfile:
+    path: "{{ mule_home }}/mule/conf/scheduler-pools.conf"
+    block: "{{ scheduler_pools_extended_configuration }}"
+  when: 
+    - scheduler_pools_extended_configuration is defined
+    - scheduler_pools_extended_configuration | length > 0
+
 - name: Configure wrapper.conf
   ansible.builtin.template:
     dest: "{{ mule_home }}/mule/conf/wrapper.conf"
@@ -22,14 +38,14 @@
     owner: "{{ mule_user }}"
     group: "{{ mule_group }}"
     mode: 0755
-
-- name: Copy file wrapper-additional.conf
-  ansible.builtin.template:
-    dest: "{{ mule_home }}/mule/conf/wrapper-additional.conf"
-    src: "../templates/wrapper-additional.conf.j2"
-    owner: "{{ mule_user }}"
-    group: "{{ mule_group }}"
-    mode: 0755
+  
+- name: Append extended configuration to wrapper.conf
+  ansible.builtin.blockinfile:
+    path: "{{ mule_home }}/mule/conf/wrapper.conf"
+    block: "{{ wrapper_extended_configuration }}"
+  when: 
+    - wrapper_extended_configuration is defined
+    - wrapper_extended_configuration | length > 0
 
 - name: Ensure systemd service file exists
   ansible.builtin.template:

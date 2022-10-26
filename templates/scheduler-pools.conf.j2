@@ -6,52 +6,38 @@
 # * cores: the number of processors available to the Java virtual machine.
 # * mem: the maximum amount of memory that the Java virtual machine will attempt to use, in kilobytes.
 
-{% if mule_default_config.scheduler_pools.gracefulShutdownTimeout.enabled %}
 # The maximum time (in milliseconds) to wait until all tasks in all the runtime thread pools have completed execution when
 # stopping the scheduler service.
-org.mule.runtime.scheduler.gracefulShutdownTimeout={{ mule_default_config.scheduler_pools.gracefulShutdownTimeout.value }}
-{% endif %}
+org.mule.runtime.scheduler.gracefulShutdownTimeout={{ scheduler_pools_gracefulShutdownTimeout }}
 
-{% if mule_default_config.scheduler_pools.cpuLight.threadPoolSize.enabled %}
 # The number of threads to keep in the cpu_lite pool, even if they are idle.
 # Supports Expressions
-org.mule.runtime.scheduler.cpuLight.threadPool.size={{ mule_default_config.scheduler_pools.cpuLight.threadPoolSize.value }}
-{% endif %}
-{% if mule_default_config.scheduler_pools.cpuLight.workQueueSize.enabled %}
+org.mule.runtime.scheduler.cpuLight.threadPool.size={{ scheduler_pools_cpuLight_threadPoolSize }}
+
 # The size of the queue to use for holding cpu_lite tasks before they are executed.
 # Supports Expressions
-org.mule.runtime.scheduler.cpuLight.workQueue.size={{ mule_default_config.scheduler_pools.cpuLight.workQueueSize.value }}
-{% endif %}
+org.mule.runtime.scheduler.cpuLight.workQueue.size={{ scheduler_pools_cpuLight_workQueueSize }}
 
-{% if mule_default_config.scheduler_pools.io.threadPoolCoreSize.enabled %}
 # The number of threads to keep in the I/O pool.
 # Supports Expressions
-org.mule.runtime.scheduler.io.threadPool.coreSize={{ mule_default_config.scheduler_pools.io.threadPoolCoreSize.value }}
-{% endif %}
+org.mule.runtime.scheduler.io.threadPool.coreSize={{ scheduler_pools_io_threadPoolCoreSize }}
 
-{% if mule_default_config.scheduler_pools.io.threadPoolMaxSize.enabled %}
 # The maximum number of threads to allow in the I/O pool.
 # Supports Expressions
-org.mule.runtime.scheduler.io.threadPool.maxSize={{ mule_default_config.scheduler_pools.io.threadPoolMaxSize.value }}
-{% endif %}
-{% if mule_default_config.scheduler_pools.io.workQueueSize.enabled %}
+org.mule.runtime.scheduler.io.threadPool.maxSize={{ scheduler_pools_io_threadPoolMaxSize }}
+
 # The size of the queue to use for holding I/O tasks before they are executed.
 # Supports Expressions
-org.mule.runtime.scheduler.io.workQueue.size={{ mule_default_config.scheduler_pools.io.workQueueSize.value }}
-{% endif %}
-{% if mule_default_config.scheduler_pools.io.threadPoolKeepAlive.enabled %}
+org.mule.runtime.scheduler.io.workQueue.size={{ scheduler_pools_io_workQueueSize }}
+
 # When the number of threads in the I/O pool is greater than SchedulerService.io.coreThreadPoolSize, this is the maximum
 # time (in milliseconds) that excess idle threads will wait for new tasks before terminating.
-org.mule.runtime.scheduler.io.threadPool.threadKeepAlive={{ mule_default_config.scheduler_pools.io.threadPoolKeepAlive.value }}
-{% endif %}
+org.mule.runtime.scheduler.io.threadPool.threadKeepAlive={{ scheduler_pools_io_threadPoolKeepAlive }}
 
-{% if mule_default_config.scheduler_pools.cpuIntensive.threadPoolSize.enabled %}
 # The number of threads to keep in the cpu_intensive pool, even if they are idle.
 # Supports Expressions
-org.mule.runtime.scheduler.cpuIntensive.threadPool.size={{ mule_default_config.scheduler_pools.cpuIntensive.threadPoolSize.value }}
-{% endif %}
-{% if mule_default_config.scheduler_pools.cpuIntensive.workQueueSize.enabled %}
+org.mule.runtime.scheduler.cpuIntensive.threadPool.size={{ scheduler_pools_cpuIntensive_threadPoolSize }}
+
 # The size of the queue to use for holding cpu_intensive tasks before they are executed.
 # Supports Expressions
-org.mule.runtime.scheduler.cpuIntensive.workQueue.size={{ mule_default_config.scheduler_pools.cpuIntensive.workQueueSize.value }}
-{% endif %}
+org.mule.runtime.scheduler.cpuIntensive.workQueue.size={{ scheduler_pools_cpuIntensive_workQueueSize }}
