@@ -38,9 +38,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - distro: centos7
-            playbook: converge.yml
+        distro:
+          - centos:7.9
+          - ol:8.6
 
     steps:
       - name: Check out the codebase.
