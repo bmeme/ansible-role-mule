@@ -139,13 +139,13 @@ wrapper.java.library.path.2=%MULE_HOME%/lib/boot
 
 # Increase the default startup timeout so that the JVM has enough
 # time to download the required jars on a slow connection
-wrapper.startup.timeout={{ mule_default_config.wrapper.startupTimeout }}
+wrapper.startup.timeout={{ wrapper_startupTimeout }}
 
 # Initial Java Heap Size (in MB)
-wrapper.java.initmemory={{ mule_default_config.wrapper.java.InitMemory }}
+wrapper.java.initmemory={{ wrapper_java_InitMemory }}
 
 # Maximum Java Heap Size (in MB)
-wrapper.java.maxmemory={{ mule_default_config.wrapper.java.MaxMemory }}
+wrapper.java.maxmemory={{ wrapper_java_MaxMemory }}
 
 # Ignore gaps in additional properties sequence
 wrapper.ignore_sequence_gaps=TRUE
@@ -154,32 +154,32 @@ wrapper.ignore_sequence_gaps=TRUE
 # Wrapper Logging Properties
 #********************************************************************
 # Format of output for the console.  (See docs for formats)
-wrapper.console.format={{ mule_default_config.wrapper.logging.console.format }}
+wrapper.console.format={{ wrapper_logging_console_format }}
 
 # Log Level for console output.  (See docs for log levels)
-wrapper.console.loglevel={{ mule_default_config.wrapper.logging.console.level }}
+wrapper.console.loglevel={{ wrapper_logging_console_level }}
 
 # Log file to use for wrapper output logging.
-wrapper.logfile={{ mule_default_config.wrapper.logging.logfile.path }}/{{ mule_default_config.wrapper.logging.logfile.filename }}
+wrapper.logfile={{ wrapper_logging_logfile_path }}/{{ wrapper_logging_logfile_filename }}
 
 # Format of output for the log file.  (See docs for formats)
-wrapper.logfile.format={{ mule_default_config.wrapper.logging.logfile.format }}
+wrapper.logfile.format={{ wrapper_logging_logfile_format }}
 
 # Log Level for log file output.  (See docs for log levels)
-wrapper.logfile.loglevel={{ mule_default_config.wrapper.logging.logfile.level }}
+wrapper.logfile.loglevel={{ wrapper_logging_logfile_level }}
 
 # Maximum size that the log file will be allowed to grow to before
 #  the log is rolled. Size is specified in bytes.  The default value
 #  of 0, disables log rolling.  May abbreviate with the 'k' (kb) or
 #  'm' (mb) suffix.  For example: 10m = 10 megabytes.
-wrapper.logfile.maxsize={{ mule_default_config.wrapper.logging.logfile.maxSize }}
+wrapper.logfile.maxsize={{ wrapper_logging_logfile_maxSize }}
 
 # Maximum number of rolled log files which will be allowed before old
 #  files are deleted.  The default value of 0 implies no limit.
-wrapper.logfile.maxfiles={{ mule_default_config.wrapper.logging.logfile.maxFiles }}
+wrapper.logfile.maxfiles={{ wrapper_logging_logfile_maxFiles }}
 
 # Log Level for sys/event log output.  (See docs for log levels)
-wrapper.syslog.loglevel={{ mule_default_config.wrapper.logging.syslog.level }}
+wrapper.syslog.loglevel={{ wrapper_logging_syslog_level }}
 
 #********************************************************************
 # Wrapper Windows Properties
