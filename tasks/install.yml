@@ -1,16 +1,17 @@
 ---
-- name: Download mule-standalone-{{ mule_version }}.tar.gz
+- name: Download mule-standalone
   ansible.builtin.get_url:
     url: "{{ mule_download_url }}/{{ mule_version }}/mule-standalone-{{ mule_version }}.tar.gz"
     dest: "{{ mule_home }}"
     checksum: "sha1:{{ mule_checksum }}"
     owner: "{{ mule_user }}"
     group: "{{ mule_user }}"
+    mode: 0755
   register: mule_artifact
   until: mule_artifact is succeeded
 
-- name: Install mule-standalone-{{ mule_version }}
-  unarchive:
+- name: Install mule-standalone
+  ansible.builtin.unarchive:
     src: '{{ mule_artifact.dest }}'
     dest: '{{ mule_home }}/'
     remote_src: true
@@ -19,12 +20,12 @@
     mode: 0755
 
 - name: Ensure symlink to old Mule version is removed
-  file:
+  ansible.builtin.file:
     path: "{{ mule_home }}/mule"
     state: absent
 
 - name: Ensure new Mule version is correctly linked
-  file:
+  ansible.builtin.file:
     path: "{{ mule_home }}/mule"
     src: "{{ mule_home }}/mule-standalone-{{ mule_version }}"
     state: link
@@ -32,7 +33,7 @@
     group: "{{ mule_user }}"
 
 - name: Remove Mule package
-  file:
+  ansible.builtin.file:
     path: "{{ mule_home }}/mule-standalone-{{ mule_version }}.tar.gz"
     state: absent
   when: mule_remove_package | default(false) | bool
