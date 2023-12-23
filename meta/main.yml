@@ -1,3 +1,4 @@
+---
 galaxy_info:
   role_name: mule
   namespace: bmeme
@@ -5,7 +6,7 @@ galaxy_info:
   description: This role provides installation of Mulesoft
   company: Bonsaimeme S.r.l.
   license: "license (BSD, MIT)"
-  min_ansible_version: 2.1
+  min_ansible_version: "2.11"
   platforms:
     - name: EL
       versions:

@@ -1,51 +1,42 @@
-![example workflow](https://github.com/bmeme/ansible-role-mule/actions/workflows/ci.yml/badge.svg?branch=main)
+
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
 Ansible Role: Mule
 =========
 
-Installs [Mule](https://www.mulesoft.com/) on Linux servers.
+Installs [Mule Community Edition](https://www.mulesoft.com/) on Linux servers.
 
-Requirements
-------------
-
+## Requirements
 Java must be available on the server. 
 You can easily install Java using the great [Geerlingguy role](https://github.com/geerlingguy/ansible-role-java) `geerlingguy.java` role. 
-But you can use others obviously.
+However, you can also use other roles, of course.
 
-Make sure the Java version installed meets the Mule requirements.
+Ensure that the installed Java version meets Mule's requirements.
 
-Installation
-------------
-
+## Installation
 This is an Ansible role distributed using Ansible Galaxy. In order to install this role you can use the following command.
 
 `$ ansible-galaxy install bmeme.mule`
 
-Update
-------
-
+## Update
 If you want to update the role, you need to pass --force parameter when installing. Please, check the following command:
 
 `$ ansible-galaxy install --force bmeme.mule`
 
-Role Variables
---------------
+## Role Variables
 Basic variables are:
 
 | Variable Name  | Description  | Default  |
 |----------------|--------------|----------|
-| `mule_version` | The version of Mule you want to install. Get a look [here](https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/)| `4.2.1`|
+| `mule_version` | The version of Mule you want to install. Get a look [here](https://repository-master.mulesoft.org/nexus/content/repositories/releases/org/mule/distributions/mule-standalone/)| `4.5.0`|
 | `mule_group`   | The system group to create running Mule | `mule` |
 | `mule_user`   | The system user to create running Mule | `mule` |
 | `mule_home`   | Directory that hosts Mule | `/opt/mule` |
 | `mule_remove_package`   | Remove "tar.gz" Mule package when been installed | `true` |
 | `mule_restart_handler_enabled`   | Restart/Start Mule after installation | `true` |
 
-Mule Configuration Properties
------------------------------
-
+## Mule Configuration Properties
 This role injects these configuration files into mule installation folder *before* to start it:
 - http-server-socket.conf
 - scheduler-pools.conf
@@ -131,12 +122,10 @@ wrapper_extended_configuration: ""
 ```
 To best configure your Mule instance take a look at the official documentation [here](https://docs.mulesoft.com/general/)
 
-Dependencies
-------------
+## Dependencies
 N/A
 
-Example Playbook
-----------------
+## Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
@@ -147,23 +136,14 @@ Including an example of how to use your role (for instance, with variables passe
         - geerlingguy.java # for example
         - bmeme.mule
 
-License
--------
+## License
+MIT
 
-MIT/BSD
+## Author Information
+This role was created by [Bmeme](https://www.bmeme.com). It is actually maintained by [Daniele Piaggesi](https://github.com/g0blin79) and [Roberto Mariani](https://github.com/jean-louis).
 
-Author Information
-------------------
-This role was created by [Bmeme](https://www.bmeme.com).
-
-Credits
--------
+## Credits
 Building this role we are influenced by other roles we usually use/used and their approaches. 
 Thanks to the great works of:
 - [geerligguy](https://github.com/geerlingguy)
 - [lean-delivery](https://github.com/lean-delivery)
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

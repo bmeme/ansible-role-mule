@@ -2,10 +2,10 @@
 - name: Configure http-server-sockets.conf
   ansible.builtin.template:
     dest: "{{ mule_home }}/mule/conf/http-server-sockets.conf"
-    src: "../templates/http-server-sockets.conf.j2"
+    src: "templates/http-server-sockets.conf.j2"
     owner: "{{ mule_user }}"
     group: "{{ mule_group }}"
-    mode: 0755
+    mode: 0644
 
 - name: Append extended configuration to http-server-sockets.conf
   ansible.builtin.blockinfile:
@@ -18,10 +18,10 @@
 - name: Configure scheduler-pools.conf
   ansible.builtin.template:
     dest: "{{ mule_home }}/mule/conf/scheduler-pools.conf"
-    src: "../templates/scheduler-pools.conf.j2"
+    src: "templates/scheduler-pools.conf.j2"
     owner: "{{ mule_user }}"
     group: "{{ mule_group }}"
-    mode: 0755
+    mode: 0644
 
 - name: Append extended configuration to scheduler-pools.conf
   ansible.builtin.blockinfile:
@@ -34,10 +34,10 @@
 - name: Configure wrapper.conf
   ansible.builtin.template:
     dest: "{{ mule_home }}/mule/conf/wrapper.conf"
-    src: "../templates/wrapper.conf.j2"
+    src: "templates/wrapper.conf.j2"
     owner: "{{ mule_user }}"
     group: "{{ mule_group }}"
-    mode: 0755
+    mode: 0644
   
 - name: Append extended configuration to wrapper.conf
   ansible.builtin.blockinfile:
@@ -50,7 +50,10 @@
 - name: Ensure systemd service file exists
   ansible.builtin.template:
     dest: "/usr/lib/systemd/system/mule.service"
-    src: "../templates/mule.service.j2"
+    src: "templates/mule.service.j2"
+    owner: "root"
+    group: "root"
+    mode: 0644
 
 - name: Ensure systemd service file is correctly activated
   ansible.builtin.file:
@@ -58,7 +61,7 @@
     src: "/usr/lib/systemd/system/mule.service"
     state: link
 
-- name: Ensure {{ mule_home }} has right permissions
+- name: Ensure mule home has right permissions
   ansible.builtin.file:
     path: "{{ mule_home }}"
     recurse: yes

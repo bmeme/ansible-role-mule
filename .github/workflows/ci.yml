@@ -1,14 +1,7 @@
 ---
-name: Ansible Role Mule CI
+name: Ansible Role Mule
 'on':
-  pull_request:
   push:
-    branches:
-      - main
-
-defaults:
-  run:
-    working-directory: 'bmeme.mule'
 
 jobs:
 
@@ -16,50 +9,35 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the codebase.
-        uses: actions/checkout@v2
-        with:
-          path: 'bmeme.mule'
+      - 
+        name: Check out the codebase.
+        uses: actions/checkout@v3
+      -
+        name: Run ansible-lint
+        uses: ansible/ansible-lint@main
 
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install test dependencies.
-        run: pip3 install yamllint
-
-      - name: Lint code.
-        run: |
-          yamllint .
-
-  molecule:
-    name: Molecule
+  test:
+    name: Testing ansible role bmeme.mule
     runs-on: ubuntu-latest
+    needs: lint
     strategy:
       matrix:
         distro:
-          - centos:7.9
-          - ol:8.6
+          - "rockylinux:8.7-2.11"
+          - "rockylinux:8.8-2.11"
+          - "rockylinux:8.9-2.11"
+          - "rockylinux:9.3-2.15"
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+      -
+        name: Molecule test
+        uses: gofrolist/molecule-action@v2
         with:
-          path: 'bmeme.mule'
-
-      - name: Set up Python 3.
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
-
-      - name: Run Molecule tests.
-        run: molecule test
+          molecule_options: --debug
+          molecule_args: -d docker
+          molecule_command: test
         env:
-          PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          MOLECULE_PLAYBOOK: ${{ matrix.playbook }}
