@@ -16,62 +16,17 @@ mule_checksum: >-
   {{ lookup('url', mule_checksum_url) }}
 
 ## Mule base configuration
-## @see scheduler-pools.conf
-scheduler_pools_gracefulShutdownTimeout: "15000"
-scheduler_pools_cpuLight_threadPoolSize: "2*cores"
-scheduler_pools_cpuLight_workQueueSize: 0
-scheduler_pools_io_threadPoolCoreSize: "cores"
-scheduler_pools_io_threadPoolMaxSize: "max(2, cores + ((mem - 245760) / 5120))"
-scheduler_pools_io_workQueueSize: 0
-scheduler_pools_io_threadPoolKeepAlive: 30000
-scheduler_pools_cpuIntensive_threadPoolSize: "2*cores"
-scheduler_pools_cpuIntensive_workQueueSize: "2*cores"
-
-# Custom configuration items
-# Example:
-#
-# scheduler_pools_extended_configuration: |-
-#   org.mule.runtime.scheduler.new_amazing_property=value
-#
-scheduler_pools_extended_configuration: ""
-
-## @see wrapper.conf
-wrapper_startupTimeout: "600"
-wrapper_java_InitMemory: "1024"
-wrapper_java_MaxMemory: "1024"
-wrapper_logging_console_format: M
-wrapper_logging_console_level: INFO
-wrapper_logging_logfile_path: "%MULE_BASE%/logs"
-wrapper_logging_logfile_filename: "%MULE_APP%.log"
-wrapper_logging_logfile_format: M
-wrapper_logging_logfile_level: INFO
-wrapper_logging_logfile_maxSize: "1m"
-wrapper_logging_logfile_maxFiles: 10
-wrapper_logging_syslog_level: NONE
-
-# Custom configuration items
-# Example:
-#
-# wrapper_extended_configuration: |-
-#   wrapper.new_amazing_property=value
-#
-wrapper_extended_configuration: ""
-
-## @see http-server-sockets.conf
-http_server_sockets_sendBufferSize: 1024
-http_server_sockets_receiveBufferSize: 1024
-http_server_sockets_clientTimeout: 60000
-http_server_sockets_sendTcpNoDelay: "true"
-http_server_sockets_linger: 60000
-http_server_sockets_keepAlive: "false"
-http_server_sockets_reuseAddress: "true"
-http_server_sockets_receiveBacklog: 50
-http_server_sockets_serverTimeout: 60000
-
-# Custom configuration items
-# Example:
-#
-# http_server_extended_configuration: |-
-#   org.mule.runtime.http.server.socket.new_amazing_property=value
-#
-http_server_extended_configuration: ""
+# Java
+mule_wrapper_java_command: "java"
+mule_wrapper_java_initmemory: "1024"
+mule_wrapper_java_maxmemory: "2048"
+mule_wrapper_startup_timeout: "600"
+# Mule
+mule_wrapper_console_format: "M"
+mule_wrapper_console_loglevel: "INFO"
+mule_wrapper_logfile: "%MULE_BASE%/logs/%MULE_APP%.log"
+mule_wrapper_logfile_format: "M"
+mule_wrapper_logfile_loglevel: "INFO"
+mule_wrapper_logfile_maxsize: "1m"
+mule_wrapper_logfile_maxfiles: "10"
+mule_wrapper_syslog_loglevel: "NONE"
