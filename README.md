@@ -37,90 +37,27 @@ Basic variables are:
 | `mule_restart_handler_enabled`   | Restart/Start Mule after installation | `true` |
 
 ## Mule Configuration Properties
-This role injects these configuration files into mule installation folder *before* to start it:
-- http-server-socket.conf
-- scheduler-pools.conf
-- wrapper.conf
+In previous versions of this role (1.x.x), it allows a complete Mule configuration injecting template files.
+Unfortunately, this approach caused some cross-compatibility problems supporting different software releases and for this reason we removed this feature.
 
-and allows to customize default values of these files using the following variables:
+Now this role allows to configure only basic java properties and logging properties into the `wrapper.conf` file
 
-### http-server-socket.conf
 | Variable Name  | Description  | Default  |
 |----------------|--------------|----------|
-| `http_server_sockets_sendBufferSize` | The size of the buffer (in bytes) used when sending data, set on the socket itself.| `1024`|
-| `http_server_sockets_receiveBufferSize`   | The size of the buffer (in bytes) used when receiving data, set on the socket itself. Commented. | `1024` |
-| `http_server_sockets_clientTimeout`   | The SO_TIMEOUT value on client sockets | `60000` |
-| `http_server_sockets_sendTcpNoDelay`   | Transmitted data is not collected together for greater efficiency but sent immediately. | `true` |
-| `http_server_sockets_linger`   | The SO_LINGER value. | `60000` |
-| `http_server_sockets_keepAlive`   | SO_KEEPALIVE behavior on open sockets. | `false` |
-| `http_server_sockets_reuseAddress`   | Enabling SO_REUSEADDR prior to binding the socket using bind(SocketAddress) allows the socket to be bound even though a previous connection is in a clientSocketTimeout state. | `true` |
-| `http_server_sockets_receiveBacklog`   | The maximum queue length for incoming connections. | `50` |
-| `http_server_sockets_serverTimeout`   | The SO_TIMEOUT value when the socket is used as a server. | `60000` |
+| `mule_wrapper_java_command` | Java Application absolute path | `java` |
+| `mule_wrapper_java_initmemory` | Initial Java Heap Size (in MB) | `1024` |
+| `mule_wrapper_java_maxmemory` | Maximum Java Heap Size (in MB) | `2048` |
+| `mule_wrapper_startup_timeout` | Default startup timeout | `600` |
+| `mule_wrapper_console_format` | Format of output for the console.  (See docs for formats) | `M` |
+| `mule_wrapper_console_loglevel` | Log Level for console output.  (See docs for log levels) | `INFO` |
+| `mule_wrapper_logfile` | Log file to use for wrapper output logging. | `%MULE_BASE%/logs/%MULE_APP%.log` |
+| `mule_wrapper_logfile_format` | Format of output for the log file.  (See docs for formats) | `M` |
+| `mule_wrapper_logfile_loglevel` | Log Level for log file output.  (See docs for log levels) | `INFO` |
+| `mule_wrapper_logfile_maxsize` | Maximum size that the log file will be allowed to grow to before the log is rolled | `1m` |
+| `mule_wrapper_logfile_maxfiles` | Maximum number of rolled log files which will be allowed before old files are deleted. | `10` |
+| `mule_wrapper_syslog_loglevel` | Log Level for sys/event log output.  (See docs for log levels) | `NONE` |
 
-### scheduler-pools.conf
-| Variable Name  | Description  | Default  |
-|----------------|--------------|----------|
-| `scheduler_pools_gracefulShutdownTimeout` | The maximum time (in milliseconds) to wait until all tasks in all the runtime thread pools have completed execution when stopping the scheduler service.| `15000`|
-| `scheduler_pools_cpuLight_threadPoolSize`   | The number of threads to keep in the cpu_lite pool, even if they are idle. | `2*cores` |
-| `scheduler_pools_cpuLight_workQueueSize`   | The size of the queue to use for holding cpu_lite tasks before they are executed. | `0` |
-| `scheduler_pools_io_threadPoolCoreSize`   | The number of threads to keep in the I/O pool. | `cores` |
-| `scheduler_pools_io_threadPoolMaxSize`   | The maximum number of threads to allow in the I/O pool. | `max(2, cores + ((mem - 245760) / 5120))` |
-| `scheduler_pools_io_workQueueSize`   | The size of the queue to use for holding I/O tasks before they are executed. | `0` |
-| `scheduler_pools_io_threadPoolKeepAlive`   | Maximum time (in milliseconds) that excess idle threads will wait for new tasks before terminating. | `30000` |
-| `scheduler_pools_cpuIntensive_threadPoolSize`   | The number of threads to keep in the cpu_intensive pool, even if they are idle. | `2*cores` |
-| `scheduler_pools_cpuIntensive_workQueueSize`   | The size of the queue to use for holding cpu_intensive tasks before they are executed. | `2*cores` |
-
-### wrapper.conf
-| Variable Name  | Description  | Default  |
-|----------------|--------------|----------|
-| `wrapper_startupTimeout` | Increase the default startup timeout so that the JVM has enough time to download the required jars on a slow connection. | `600`|
-| `wrapper_java_InitMemory`   | Initial Java Heap Size (in MB). | `1024` |
-| `wrapper_java_MaxMemory`   | Maximum Java Heap Size (in MB). | `1024` |
-| `wrapper_logging_console_format`   | Format of output for the console.  (See docs for formats) | `M` |
-| `wrapper_logging_console_level`   | Log Level for console output. | `INFO` |
-| `wrapper_logging_logfile_path`   | The path of log file to use for wrapper output logging. | `%MULE_BASE%/logs` |
-| `wrapper_logging_logfile_filename`   | Log file to use for wrapper output logging.. | `%MULE_APP%.log` |
-| `wrapper_logging_logfile_format`   | Format of output for the log file. | `M` |
-| `wrapper_logging_logfile_level`   | Log Level for log file output. | `INFO` |
-| `wrapper_logging_logfile_maxSize`   | Maximum size (in bytes) that the log file will be allowed to grow to before the log is rolled. | `1m` |
-| `wrapper_logging_logfile_maxFiles`   | Maximum number of rolled log files which will be allowed before old files are deleted. | `10` |
-| `wrapper_logging_syslog_level`   | Log Level for sys/event log output. | `NONE` |
-
-To allow a full configuration of these files, this role makes available an advanced configuration variable where you can  add custom properties. These properties will be added to relative file during role execution and before to startup Mule for the first time:
-
-**http-server-socket.conf**
-```
-# Custom configuration items
-# Example:
-#
-# http_server_extended_configuration: |-
-#   org.mule.runtime.http.server.socket.new_amazing_property=value
-#
-http_server_extended_configuration: ""
-```
-
-**scheduler-pools.conf**
-```
-# Custom configuration items
-# Example:
-#
-# scheduler_pools_extended_configuration: |-
-#   org.mule.runtime.scheduler.new_amazing_property=value
-#
-scheduler_pools_extended_configuration: ""
-```
-
-**wrapper.conf**
-```
-# Custom configuration items
-# Example:
-#
-# wrapper_extended_configuration: |-
-#   wrapper.new_amazing_property=value
-#
-wrapper_extended_configuration: ""
-```
-To best configure your Mule instance take a look at the official documentation [here](https://docs.mulesoft.com/general/)
+To best configure your Mule take a look at the official documentation [here](https://docs.mulesoft.com/general/) and customize your instance at your needs directly into your playbook.
 
 ## Dependencies
 N/A

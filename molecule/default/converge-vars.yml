@@ -3,4 +3,4 @@ java_packages:
   - java-11-openjdk
 
 # Disabled start/restart of service due to an error durint test.
-mule_restart_handler_enabled: false
+mule_restart_handler_enabled: true

@@ -1,51 +1,36 @@
 ---
-- name: Configure http-server-sockets.conf
-  ansible.builtin.template:
-    dest: "{{ mule_home }}/mule/conf/http-server-sockets.conf"
-    src: "templates/http-server-sockets.conf.j2"
-    owner: "{{ mule_user }}"
-    group: "{{ mule_group }}"
-    mode: 0644
 
-- name: Append extended configuration to http-server-sockets.conf
-  ansible.builtin.blockinfile:
-    path: "{{ mule_home }}/mule/conf/http-server-sockets.conf"
-    block: "{{ http_server_extended_configuration }}"
-  when: 
-    - http_server_extended_configuration is defined
-    - http_server_extended_configuration | length > 0
-
-- name: Configure scheduler-pools.conf
-  ansible.builtin.template:
-    dest: "{{ mule_home }}/mule/conf/scheduler-pools.conf"
-    src: "templates/scheduler-pools.conf.j2"
-    owner: "{{ mule_user }}"
-    group: "{{ mule_group }}"
-    mode: 0644
-
-- name: Append extended configuration to scheduler-pools.conf
-  ansible.builtin.blockinfile:
-    path: "{{ mule_home }}/mule/conf/scheduler-pools.conf"
-    block: "{{ scheduler_pools_extended_configuration }}"
-  when: 
-    - scheduler_pools_extended_configuration is defined
-    - scheduler_pools_extended_configuration | length > 0
-
-- name: Configure wrapper.conf
-  ansible.builtin.template:
+- name: Configure Mule wrapper.conf
+  ansible.builtin.lineinfile:
     dest: "{{ mule_home }}/mule/conf/wrapper.conf"
-    src: "templates/wrapper.conf.j2"
-    owner: "{{ mule_user }}"
-    group: "{{ mule_group }}"
-    mode: 0644
-  
-- name: Append extended configuration to wrapper.conf
-  ansible.builtin.blockinfile:
-    path: "{{ mule_home }}/mule/conf/wrapper.conf"
-    block: "{{ wrapper_extended_configuration }}"
-  when: 
-    - wrapper_extended_configuration is defined
-    - wrapper_extended_configuration | length > 0
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  with_items:
+    - regexp: "^wrapper.java.command.?=.+$"
+      line: "wrapper.java.command={{ mule_wrapper_java_command }}"
+    - regexp: "^wrapper.java.initmemory.?=.+$"
+      line: "wrapper.java.initmemory={{ mule_wrapper_java_initmemory }}"
+    - regexp: "^wrapper.java.maxmemory.?=.+$"
+      line: "wrapper.java.maxmemory={{ mule_wrapper_java_maxmemory }}"
+    - regexp: "^wrapper.startup.timeout.?=.+$"
+      line: "wrapper.startup.timeout={{ mule_wrapper_startup_timeout }}"
+    - regexp: "^wrapper.console.format.?=.+$"
+      line: "wrapper.console.format={{ mule_wrapper_console_format }}"
+    - regexp: "^wrapper.console.loglevel.?=.+$"
+      line: "wrapper.console.loglevel={{ mule_wrapper_console_loglevel }}"
+    - regexp: "^wrapper.logfile.?=.+$"
+      line: "wrapper.logfile={{ mule_wrapper_logfile }}"
+    - regexp: "^wrapper.logfile.format.?=.+$"
+      line: "wrapper.logfile.format={{ mule_wrapper_logfile_format }}"
+    - regexp: "^wrapper.logfile.loglevel.?=.+$"
+      line: "wrapper.logfile.loglevel={{ mule_wrapper_logfile_loglevel }}"
+    - regexp: "^wrapper.logfile.maxsize.?=.+$"
+      line: "wrapper.logfile.maxsize={{ mule_wrapper_logfile_maxsize }}"
+    - regexp: "^wrapper.logfile.maxfiles.?=.+$"
+      line: "wrapper.logfile.maxfiles={{ mule_wrapper_logfile_maxfiles }}"
+    - regexp: "^wrapper.syslog.loglevel.?=.+$"
+      line: "wrapper.syslog.loglevel={{ mule_wrapper_syslog_loglevel }}"
 
 - name: Ensure systemd service file exists
   ansible.builtin.template:
