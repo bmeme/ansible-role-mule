@@ -20,6 +20,7 @@ mule_checksum: >-
 mule_wrapper_java_command: "java"
 mule_wrapper_java_initmemory: "1024"
 mule_wrapper_java_maxmemory: "2048"
+mule_wrapper_java_additional: {}
 mule_wrapper_startup_timeout: "600"
 # Mule
 mule_wrapper_console_format: "M"

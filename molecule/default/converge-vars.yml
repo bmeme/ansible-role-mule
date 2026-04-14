@@ -4,3 +4,7 @@ java_packages:
 
 # Disabled start/restart of service due to an error durint test.
 mule_restart_handler_enabled: true
+
+mule_wrapper_java_additional:
+  20: "-Dmule.app.logs.path=/var/log/mule/apps"
+  21: "-Dmule.domain.logs.path=/var/log/mule/domains"
