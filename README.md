@@ -40,13 +40,14 @@ Basic variables are:
 In previous versions of this role (1.x.x), it allows a complete Mule configuration injecting template files.
 Unfortunately, this approach caused some cross-compatibility problems supporting different software releases and for this reason we removed this feature.
 
-Now this role allows to configure only basic java properties and logging properties into the `wrapper.conf` file
+Now this role allows to configure basic java properties, additional JVM startup properties, and logging properties into the `wrapper.conf` file
 
 | Variable Name  | Description  | Default  |
 |----------------|--------------|----------|
 | `mule_wrapper_java_command` | Java Application absolute path | `java` |
 | `mule_wrapper_java_initmemory` | Initial Java Heap Size (in MB) | `1024` |
 | `mule_wrapper_java_maxmemory` | Maximum Java Heap Size (in MB) | `2048` |
+| `mule_wrapper_java_additional` | Additional `wrapper.java.additional.n` entries keyed by explicit numeric index | `{}` |
 | `mule_wrapper_startup_timeout` | Default startup timeout | `600` |
 | `mule_wrapper_console_format` | Format of output for the console.  (See docs for formats) | `M` |
 | `mule_wrapper_console_loglevel` | Log Level for console output.  (See docs for log levels) | `INFO` |
@@ -56,6 +57,27 @@ Now this role allows to configure only basic java properties and logging propert
 | `mule_wrapper_logfile_maxsize` | Maximum size that the log file will be allowed to grow to before the log is rolled | `1m` |
 | `mule_wrapper_logfile_maxfiles` | Maximum number of rolled log files which will be allowed before old files are deleted. | `10` |
 | `mule_wrapper_syslog_loglevel` | Log Level for sys/event log output.  (See docs for log levels) | `NONE` |
+
+You can use `mule_wrapper_java_additional` to define custom JVM properties while keeping explicit control over the `wrapper.java.additional.n` index:
+
+```yaml
+mule_wrapper_java_additional:
+  10: "-Dhttp.proxyHost=proxy.local"
+  11: "-Dhttp.proxyPort=8080"
+  20: "-Duser.timezone=Europe/Rome"
+```
+
+This produces the following entries in `wrapper.conf`:
+
+```properties
+wrapper.java.additional.10=-Dhttp.proxyHost=proxy.local
+wrapper.java.additional.11=-Dhttp.proxyPort=8080
+wrapper.java.additional.20=-Duser.timezone=Europe/Rome
+```
+
+Indexes must be numeric.
+
+Note: this role writes these entries directly into `wrapper.conf`. During manual tests, `wrapper-additional.conf` was regenerated on Mule restart and custom changes were lost, so it is not used as a stable extension point by this role.
 
 To best configure your Mule take a look at the official documentation [here](https://docs.mulesoft.com/general/) and customize your instance at your needs directly into your playbook.
 
@@ -69,6 +91,10 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: muleserver
       vars_files:
         - vars/main.yml
+      vars:
+        mule_wrapper_java_additional:
+          10: "-Dhttp.proxyHost=proxy.local"
+          11: "-Dhttp.proxyPort=8080"
       roles:
         - geerlingguy.java # for example
         - bmeme.mule
